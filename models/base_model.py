@@ -2,7 +2,7 @@
 """This module defines a Baseclass for all models in our Airbnb clone"""
 from datetime import datetime
 import uuid
-from models import storage
+import models
 
 
 class BaseModel:
@@ -25,7 +25,8 @@ class BaseModel:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
-            storage.new(self.to_dict())
+            models.storage.new(self)
+            models.storage.save()
 
     def __str__(self):
         """string representation of the basemodel"""
@@ -35,7 +36,6 @@ class BaseModel:
         """updates the public instance attribute updated_at
             with the current datetime
         """
-        storage.save()
         self.updated_at = datetime.now()
 
     def to_dict(self):
